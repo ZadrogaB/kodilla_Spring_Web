@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class DbService {
 
+
     private final TaskRepository repository;
 
     public List<Task> getAllTasks() {

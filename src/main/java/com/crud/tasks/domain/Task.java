@@ -16,6 +16,7 @@ import javax.persistence.Id;
 public class Task {
     @Id
     @GeneratedValue
+    @Column(name = "Id", nullable = false)
     private Long id;
 
     @Column(name = "name")
