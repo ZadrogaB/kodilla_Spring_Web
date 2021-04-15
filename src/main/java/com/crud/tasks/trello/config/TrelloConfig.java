@@ -5,9 +5,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
-@Component
+
+
+
 @Getter
 //@PropertySource(value={"classpath:application.properties"})
+@PropertySource("classpath:application.properties")
+@Component
 public class TrelloConfig {
     @Value("${trello.api.endpoint.prod}")
     private String trelloApiEndpoint;
