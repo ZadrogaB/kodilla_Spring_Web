@@ -10,11 +10,11 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@SpringBootTest
+//@SpringBootTest
 public class TrelloMapperTests {
 
-    @Autowired
-    private TrelloMapper mapper;
+//    @Autowired
+    private TrelloMapper mapper = new TrelloMapper();
 
     @Test
     void mapToBoardsTest(){
@@ -30,6 +30,14 @@ public class TrelloMapperTests {
 
         //Then
         assertEquals(2, result.size());
+        assertEquals("1", result.get(0).getId());
+        assertEquals("TestName1", result.get(0).getName());
+        assertEquals(0, result.get(0).getLists().size());
+        assertEquals("2", result.get(1).getId());
+        assertEquals("TestName2", result.get(1).getName());
+        assertEquals(0, result.get(1).getLists().size());
+        assertEquals(TrelloBoard.class, result.get(0).getClass());
+        assertEquals(TrelloBoard.class, result.get(1).getClass());
     }
 
     @Test
@@ -46,6 +54,14 @@ public class TrelloMapperTests {
 
         //Then
         assertEquals(2, result.size());
+        assertEquals("1", result.get(0).getId());
+        assertEquals("TestName1", result.get(0).getName());
+        assertEquals(0, result.get(0).getLists().size());
+        assertEquals("2", result.get(1).getId());
+        assertEquals("TestName2", result.get(1).getName());
+        assertEquals(0, result.get(1).getLists().size());
+        assertEquals(TrelloBoardDto.class, result.get(0).getClass());
+        assertEquals(TrelloBoardDto.class, result.get(1).getClass());
     }
 
     @Test
@@ -62,6 +78,15 @@ public class TrelloMapperTests {
 
         //Then
         assertEquals(2, result.size());
+        assertEquals("1", result.get(0).getId());
+        assertEquals("TestName1", result.get(0).getName());
+        assertEquals(false, result.get(0).isClosed());
+        assertEquals("2", result.get(1).getId());
+        assertEquals("TestName2", result.get(1).getName());
+        assertEquals(false, result.get(1).isClosed());
+        assertEquals(TrelloList.class, result.get(0).getClass());
+        assertEquals(TrelloList.class, result.get(1).getClass());
+
     }
 
     @Test
@@ -78,6 +103,14 @@ public class TrelloMapperTests {
 
         //Then
         assertEquals(2, result.size());
+        assertEquals("1", result.get(0).getId());
+        assertEquals("TestName1", result.get(0).getName());
+        assertEquals(false, result.get(0).isClosed());
+        assertEquals("2", result.get(1).getId());
+        assertEquals("TestName2", result.get(1).getName());
+        assertEquals(false, result.get(1).isClosed());
+        assertEquals(TrelloListDto.class, result.get(0).getClass());
+        assertEquals(TrelloListDto.class, result.get(1).getClass());
     }
 
     @Test
@@ -90,6 +123,11 @@ public class TrelloMapperTests {
 
         //Then
         assertEquals("TestName", result.getName());
+        assertEquals("testDescription", result.getDescription());
+        assertEquals("test", result.getPos());
+        assertEquals("1", result.getListId());
+        assertEquals(TrelloCardDto.class, result.getClass());
+
     }
 
     @Test
@@ -102,6 +140,10 @@ public class TrelloMapperTests {
 
         //Then
         assertEquals("TestName", result.getName());
+        assertEquals("testDescription", result.getDescription());
+        assertEquals("test", result.getPos());
+        assertEquals("1", result.getListId());
+        assertEquals(TrelloCard.class, result.getClass());
     }
 
 }
