@@ -20,7 +20,7 @@ public class EmailScheduler {
     @Scheduled(fixedDelay = 100000)/*(cron = "0 0 10 * * *")*/
     public void sendInformationEmail() {
         long size = taskRepository.count();
-        simpleEmailService.send(
+        simpleEmailService.sendOnceDay(
                 new Mail(
                         adminConfig.getAdminMail(),
                         SUBJECT,
