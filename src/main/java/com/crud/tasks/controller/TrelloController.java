@@ -1,14 +1,15 @@
 package com.crud.tasks.controller;
 
-import com.crud.tasks.domain.CreatedTrelloCardDto;
-import com.crud.tasks.domain.TrelloBoardDto;
-import com.crud.tasks.domain.TrelloCardDto;
+import com.crud.tasks.trello.client.CreatedTrelloCardDto;
+import com.crud.tasks.trello.client.TrelloBoardDto;
+import com.crud.tasks.trello.client.TrelloCardDto;
 import com.crud.tasks.trello.facade.TrelloFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 
 @CrossOrigin("*")
 @RestController

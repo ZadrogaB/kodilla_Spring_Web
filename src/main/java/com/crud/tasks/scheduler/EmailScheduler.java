@@ -17,28 +17,27 @@ public class EmailScheduler {
     private final TaskRepository taskRepository;
     private final AdminConfig adminConfig;
 
-    @Scheduled(fixedDelay = 100000)/*(cron = "0 0 10 * * *")*/
+    @Scheduled(fixedDelay = 1000000)
     public void sendInformationEmail() {
         long size = taskRepository.count();
-        simpleEmailService.sendOnceDay(
-                new Mail(
-                        adminConfig.getAdminMail(),
-                        SUBJECT,
-                        this.messageBody(size),
-                        null
-                )
-        );
-    }
-
-    private String messageBody(long size){
-        String body;
-        if (size==0){
-            body = "Currently in database you don't have any tasks";
-        } else if (size==1){
-            body = "Currently in database you got: " + size + " task";
+        if (size == 1){
+            simpleEmailService.send(
+                    new Mail(
+                            adminConfig.getAdminMail(),
+                            SUBJECT,
+                            "Currently in database you got: " + size + " task",
+                            null
+                    )
+            );
         } else {
-            body = "Currently in database you got: " + size + " tasks";
+            simpleEmailService.send(
+                    new Mail(
+                            adminConfig.getAdminMail(),
+                            SUBJECT,
+                            "Currently in database you got: " + size + " tasks",
+                            null
+                    )
+            );
         }
-        return body;
     }
 }
