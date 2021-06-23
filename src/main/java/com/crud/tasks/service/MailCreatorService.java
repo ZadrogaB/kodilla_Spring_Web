@@ -1,5 +1,6 @@
 package com.crud.tasks.service;
 
+
 import com.crud.tasks.config.AdminConfig;
 import com.crud.tasks.config.CompanyConfig;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,13 +12,16 @@ import org.thymeleaf.context.Context;
 import java.util.ArrayList;
 import java.util.List;
 
+
 @Service
 public class MailCreatorService {
 
     @Autowired
     private AdminConfig adminConfig;
+
     @Autowired
     private CompanyConfig companyConfig;
+
     @Autowired
     @Qualifier("templateEngine")
     private TemplateEngine templateEngine;
@@ -30,31 +34,15 @@ public class MailCreatorService {
 
         Context context = new Context();
         context.setVariable("message", message);
-        context.setVariable("tasks_url", "https://zadrogab.github.io/");
+        context.setVariable("tasks_url", "http://localhost:8888/crud");
         context.setVariable("button", "Visit website");
-        context.setVariable("preview_message", "Information about new task");
-        context.setVariable("goodbye", "Have a nice day " + adminConfig.getAdminName());
-        context.setVariable("company_name", companyConfig.getName());
-        context.setVariable("company_mail", companyConfig.getMail());
-        context.setVariable("company_phone", companyConfig.getPhone());
+        context.setVariable("company_config", companyConfig);
+        context.setVariable("goodbye_message", "Have a nice day" + " " + adminConfig.getAdminName());
         context.setVariable("show_button", false);
-        context.setVariable("is_friend", false);
-        context.setVariable("admin", adminConfig);
+        context.setVariable("is_friend", true);
+        context.setVariable("admin_config", adminConfig);
         context.setVariable("application_functionality", functionality);
-
         return templateEngine.process("mail/created-trello-card-mail", context);
-    }
-
-    public String buildOnceDayMail(String message) {
-        Context context = new Context();
-        context.setVariable("message", message);
-        context.setVariable("tasks_url", "https://zadrogab.github.io/");
-        context.setVariable("button", "Visit website");
-
-        context.setVariable("admin", adminConfig);
-        context.setVariable("company", companyConfig);
-
-        return templateEngine.process("mail/once-a-day-mail", context);
     }
 
 }

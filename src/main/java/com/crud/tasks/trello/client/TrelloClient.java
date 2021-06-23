@@ -1,8 +1,5 @@
 package com.crud.tasks.trello.client;
 
-import com.crud.tasks.domain.CreatedTrelloCardDto;
-import com.crud.tasks.domain.TrelloBoardDto;
-import com.crud.tasks.domain.TrelloCardDto;
 import com.crud.tasks.trello.config.TrelloConfig;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -30,10 +27,11 @@ public class TrelloClient {
                 .queryParam("key", trelloConfig.getTrelloAppKey())
                 .queryParam("token", trelloConfig.getTrelloToken())
                 .queryParam("fields", "name,id")
-                .queryParam("lists","all")
+                .queryParam("lists", "all")
                 .build()
                 .encode()
                 .toUri();
+
 
         try {
             TrelloBoardDto[] boardsResponse = restTemplate.getForObject(url, TrelloBoardDto[].class);
@@ -47,6 +45,19 @@ public class TrelloClient {
             LOGGER.error(e.getMessage(), e);
             return Collections.emptyList();
         }
+
+    }
+
+    private URI createURL(){
+        URI url = UriComponentsBuilder.fromHttpUrl(trelloConfig.getTrelloApiEndpoint() + "/members/" + trelloConfig.getTrelloUsername() + "/boards")
+                .queryParam("key", trelloConfig.getTrelloAppKey())
+                .queryParam("token", trelloConfig.getTrelloToken())
+                .queryParam("fields", "name,id")
+                .queryParam("lists","all")
+                .build()
+                .encode()
+                .toUri();
+        return url;
     }
 
     public CreatedTrelloCardDto createNewCard(TrelloCardDto trelloCardDto) {

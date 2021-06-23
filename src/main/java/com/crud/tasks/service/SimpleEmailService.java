@@ -11,31 +11,23 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class SimpleEmailService {
 
-    private final JavaMailSender javaMailSender;
     @Autowired
     private MailCreatorService mailCreatorService;
+
+    private final JavaMailSender javaMailSender;
 
     public void send(final Mail mail) {
         log.info("Starting email preparation...");
         try {
-            javaMailSender.send(createMimeMessage(mail));
-            log.info("Email has been sent.");
-        } catch (MailException e) {
-            log.error("Failed to process email sending: " + e.getMessage(), e);
-        }
-    }
-
-    public void sendOnceDay(final Mail mail) {
-        log.info("Starting email preparation...");
-        try {
-            javaMailSender.send(createOnceDayMimeMessage(mail));
+            SimpleMailMessage mailMessage = createMailMessage(mail);
+            MimeMessagePreparator mimeMessage = createMimeMessage(mail);
+            javaMailSender.send(mailMessage);
+            javaMailSender.send(mimeMessage);
             log.info("Email has been sent.");
         } catch (MailException e) {
             log.error("Failed to process email sending: " + e.getMessage(), e);
@@ -51,12 +43,13 @@ public class SimpleEmailService {
         };
     }
 
-    private MimeMessagePreparator createOnceDayMimeMessage(final Mail mail) {
-        return mimeMessage -> {
-            MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
-            messageHelper.setTo(mail.getMailTo());
-            messageHelper.setSubject(mail.getSubject());
-            messageHelper.setText(mailCreatorService.buildOnceDayMail(mail.getMessage()), true);
-        };
+
+    private SimpleMailMessage createMailMessage(final Mail mail) {
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+        mailMessage.setTo(mail.getMailTo());
+        mailMessage.setSubject(mail.getSubject());
+        mailMessage.setText(mail.getMessage());
+        mailMessage.setCc(mail.getToCc());
+        return mailMessage;
     }
 }

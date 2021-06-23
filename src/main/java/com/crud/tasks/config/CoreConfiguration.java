@@ -16,7 +16,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class CoreConfiguration {
 
     @Bean
-    public RestTemplate restTemplate(){
+    public RestTemplate restTemplate() {
         return new RestTemplate();
     }
 
@@ -26,7 +26,5 @@ public class CoreConfiguration {
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.crud.tasks.controller"))
                 .paths(PathSelectors.any())
-                .build();
-    }
+                .build(); }
 }
-
